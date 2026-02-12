@@ -1,0 +1,13 @@
+{
+  "version": "0.1.0",
+  "configurations": [
+    {
+      "name": "FastAPI (Poetry + Uvicorn)",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "uvicorn",
+      "args": ["apps.backend.app.main:app", "--reload"],
+      "justMyCode": true
+    }
+  ]
+}
