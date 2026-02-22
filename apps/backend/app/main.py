@@ -2,6 +2,7 @@ from fastapi import FastAPI
 
 app = FastAPI()
 
+
 @app.get("/")
 def root():
     return {"Info": "Credit Risk backend app"}
