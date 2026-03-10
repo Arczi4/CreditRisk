@@ -8,5 +8,5 @@ poetry
 ## Steps:
 ```
 poetry install
-poetry run uviforn app.main:app
+poetry run uvicorn app.main:app
 ```
