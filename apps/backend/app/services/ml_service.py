@@ -1,4 +1,5 @@
 from app.ml.model_config import model_config
+from app.ml.model_pipelines import Log1pImputer, RatioInteractionImputer  # noqa: F401
 from pathlib import Path
 import pickle
 
@@ -12,11 +13,9 @@ class MlService:
         self.model = self.__load_model()
 
     def __load_model(self):
-        model = pickle.load(self.models_path / self.model_name)
+        model = pickle.load(open(self.models_path / self.model_name, "rb"))
 
         return model
 
 
 ml_service = MlService()
-
-print(ml_service)
