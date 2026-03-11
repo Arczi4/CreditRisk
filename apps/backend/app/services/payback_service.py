@@ -1,6 +1,6 @@
 import pandas as pd
 from app.models.payback_models import PaybackRequest
-from app.services.ml_service import ml_service
+from apps.backend.app.ml.ml_processor import ml_processor
 
 from app.core.logging_config import get_logger
 
@@ -34,7 +34,7 @@ class PaybackService:
             f"Predicting payback probability for request ID: {request.request_id}..."
         )
         try:
-            payback_proba = ml_service.score_single(features)
+            payback_proba = ml_processor.score_single(features)
 
         # TODO: improve error handling.
         except Exception as e:

@@ -4,7 +4,7 @@ from pathlib import Path
 import pickle
 
 
-class MlService:
+class MlProcessor:
 
     def __init__(self):
         self.models_path = Path(__file__).resolve().parent.parent / "ml" / "models"
@@ -26,4 +26,4 @@ class MlService:
         return self.model.predict_proba(features)[:, 1][0]
 
 
-ml_service = MlService()
+ml_processor = MlProcessor()
