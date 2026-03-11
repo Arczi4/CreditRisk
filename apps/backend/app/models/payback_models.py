@@ -1,7 +1,7 @@
 from typing import List
 from uuid import UUID, uuid4
 
-from pydantic import BaseModel, Field, field_validator, ConfigDict
+from pydantic import BaseModel, Field, field_serializer, ConfigDict
 
 
 class PaybackRequest(BaseModel):
@@ -60,6 +60,10 @@ class PaybackResponse(BaseModel):
     )
     payback_proba: float = Field(..., ge=0.0, le=1.0, description="Payback probability")
     insights: List[str] = Field(..., description="Additional insights provided by AI")
+
+    @field_serializer("payback_proba", when_used="always")
+    def serialize_payback_proba(self, value: float) -> float:
+        return round(value, 4)
 
     class Config:
         json_schema_extra = {

@@ -1,6 +1,6 @@
 import pandas as pd
 from app.models.payback_models import PaybackRequest
-from apps.backend.app.ml.ml_processor import ml_processor
+from app.ml.ml_processor import ml_processor
 
 from app.core.logging_config import get_logger
 
