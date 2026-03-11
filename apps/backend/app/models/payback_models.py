@@ -1,10 +1,13 @@
 from typing import List
+from uuid import UUID, uuid4
 
-from pydantic import BaseModel, Field, field_validator
+from pydantic import BaseModel, Field, field_validator, ConfigDict
 
 
 class PaybackRequest(BaseModel):
     """Payback payload request model"""
+
+    request_id: UUID = Field(default_factory=uuid4, description="Unique request ID")
 
     gender: str = Field(..., min_length=1, description="Borrower gender")
     marital_status: str = Field(
@@ -28,6 +31,24 @@ class PaybackRequest(BaseModel):
     credit_score: float = Field(..., ge=0.0, description="Borrower credit score")
     loan_amount: float = Field(..., ge=0.0, description="Borrower loan amount")
     interest_rate: float = Field(..., ge=0.0, description="Borrower interest rate")
+
+    model_config = ConfigDict(
+        json_schema_extra={
+            "example": {
+                "gender": "Female",
+                "marital_status": "Single",
+                "education_level": "High School",
+                "employment_status": "Self-employed",
+                "loan_purpose": "Other",
+                "grade_subgrade": "C3",
+                "annual_income": 29367.99,
+                "debt_to_income_ratio": 0.084,
+                "credit_score": 736,
+                "loan_amount": 2528.42,
+                "interest_rate": 13.67,
+            }
+        }
+    )
 
 
 class PaybackResponse(BaseModel):
