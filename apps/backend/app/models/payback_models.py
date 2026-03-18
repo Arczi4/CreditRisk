@@ -1,3 +1,4 @@
+from enum import Enum
 from typing import List
 from uuid import UUID, uuid4
 
@@ -51,12 +52,18 @@ class PaybackRequest(BaseModel):
     )
 
 
+class LoanDecisionEnum(Enum):
+    APPROVE = "Approve"
+    REVIEW = "Review"
+    REJECT = "Reject"
+
+
 class PaybackResponse(BaseModel):
     """Credit score response with payback proba and additional analysis"""
 
-    loan_paid_back: bool = Field(
-        default=False,
-        description="True/False of prediction if loan will be paid back. True when predict proba thershold is met",
+    loan_decision: LoanDecisionEnum = Field(
+        default=LoanDecisionEnum.REJECT.value,
+        description="Approve/Review/Reject decision for given applicant. Approved when approve thershold is met",
     )
     payback_proba: float = Field(..., ge=0.0, le=1.0, description="Payback probability")
     insights: List[str] = Field(..., description="Additional insights provided by AI")

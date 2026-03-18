@@ -18,7 +18,7 @@ async def payback(
 ):
     logger.info(f"Got payback request {request.request_id}")
     try:
-        predict_proba = payback_service.payback(request)
+        loan_decision, predict_proba = payback_service.payback(request)
     except Exception as e:
         raise Exception(
             f"Errod during predicting payback probability for request: {request.request_id}. ERROR: {e}"
@@ -28,9 +28,7 @@ async def payback(
     )
 
     return PaybackResponse(
-        loan_paid_back=(
-            True if predict_proba >= model_config.MODEL_SCORE_THRESHOLD else False
-        ),
+        loan_decision=loan_decision,
         payback_proba=predict_proba,
         insights=["none"],  # TODO: add additional insights
     )
