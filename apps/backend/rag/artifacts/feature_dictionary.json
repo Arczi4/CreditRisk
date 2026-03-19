@@ -1,0 +1,13 @@
+{
+    "gender": "The borrower`s gender.",
+    "marital_status": "Whether the borrower is single, married, divorced, or in another marital category.",
+    "education_level": "The highest level of education completed by the borrower.",
+    "employment_status": "The borrower`s current work situation, such as employed, unemployed, or self-employed.",
+    "loan_purpose": "The reason the borrower applied for the loan, such as debt consolidation, education, or personal expenses.",
+    "grade_subgrade": "A more detailed loan risk rating assigned to the borrower, usually based on creditworthiness.",
+    "annual_income": "The borrower`s total yearly income.",
+    "debt_to_income_ratio": "The percentage of the borrower`s income that goes toward paying existing debts.",
+    "credit_score": "A numeric measure of the borrower`s creditworthiness and repayment history.",
+    "loan_amount": "The total amount of money borrowed.",
+    "interest_rate": "The percentage charged on the loan amount over time."
+}
