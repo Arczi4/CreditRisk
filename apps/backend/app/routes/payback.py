@@ -17,6 +17,7 @@ async def payback(
     request: PaybackRequest,
 ):
     logger.info(f"Got payback request {request.request_id}")
+    # TODO: Better error handling
     try:
         # TODO: create dataclass
         loan_decision, predict_proba, model_signals = payback_service.payback(request)
@@ -31,10 +32,12 @@ async def payback(
     try:
         parsed_analysis_response = analysis_service.analyse(request, model_signals)
     except:
-        raise Exception
+        raise Exception(
+            f"Error during running analysis for request {request.request_id}"
+        )
 
     return PaybackEndpointResponse(
         loan_decision=loan_decision,
         payback_proba=predict_proba,
-        insights=parsed_analysis_response,  # TODO: add additional insights
+        insights=parsed_analysis_response,
     )

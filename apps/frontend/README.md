@@ -1,59 +1,111 @@
-# Frontend
+# CreditRisk — Frontend
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.3.5.
+Angular single-page application providing the user interface for credit risk analysis. Users submit loan application data through a form and receive ML-scored decisions with LLM-generated analyst insights.
 
-## Development server
+---
 
-To start a local development server, run:
+## Table of Contents
+
+- [Prerequisites](#prerequisites)
+- [Local Setup](#local-setup)
+- [Environment Configuration](#environment-configuration)
+- [Running the Development Server](#running-the-development-server)
+- [Building for Production](#building-for-production)
+- [Code Quality](#code-quality)
+- [Docker Setup](#docker-setup)
+
+---
+
+## Prerequisites
+
+- **Node.js 20+**
+- **npm** (included with Node.js)
+- **Angular CLI** — installed globally or used via npx
+
+```bash
+npm install -g @angular/cli
+```
+
+---
+
+## Local Setup
+
+1. Navigate to the frontend directory:
+
+```bash
+cd apps/frontend
+```
+
+2. Install dependencies:
+
+```bash
+npm install
+```
+
+3. Make sure the backend is running at `http://localhost:8000` (see [`apps/backend/README.md`](../backend/README.md) for backend setup).
+
+---
+
+## Environment Configuration
+
+API URL configuration is located in the `src/environments/` directory:
+
+| File                     | `apiUrl`                | Usage          |
+|--------------------------|-------------------------|----------------|
+| `environment.ts`         | `http://localhost:8000` | Development    |
+| `environment.prod.ts`    | *(empty — set at build)*| Production     |
+
+For local development, the default configuration points to the backend running on port `8000`. No changes are needed unless the backend runs on a different host or port.
+
+---
+
+## Running the Development Server
+
+Start the Angular development server:
 
 ```bash
 ng serve
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
-
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+Or using npm:
 
 ```bash
-ng generate component component-name
+npm start
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+The application will be available at `http://localhost:4200`. It will automatically reload when source files are modified.
 
-```bash
-ng generate --help
-```
+---
 
-## Building
+## Building for Production
 
-To build the project run:
+To create an optimized production build:
 
 ```bash
 ng build
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+Build artifacts will be written to the `dist/` directory. Set the `apiUrl` in `environment.prod.ts` to the production backend URL before building.
 
-## Running unit tests
+---
 
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+## Code Quality
+
+The project uses Prettier for code formatting:
+
+```bash
+npx prettier --check .
+npx prettier --write .
+```
+
+To run unit tests:
 
 ```bash
 ng test
 ```
 
-## Running end-to-end tests
+---
 
-For end-to-end (e2e) testing, run:
+## Docker Setup
 
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+> **Planned** — Docker configuration will be added in a future update.
