@@ -1,3 +1,4 @@
+from typing import List
 from pydantic_settings import BaseSettings
 
 
@@ -11,8 +12,8 @@ class Settings(BaseSettings):
     PORT: int = 8000
     DEBUG: bool = True
 
-    # Cors config
-    CORS_ORIGIN: str = "http://localhost:4200"  # Default angular
+    # CORS config
+    CORS_ORIGINS: List[str] = ["http://localhost:4200"]
 
     # Logging config
     LOG_DIR: str = "logs"

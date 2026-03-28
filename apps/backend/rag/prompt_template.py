@@ -30,20 +30,20 @@ template = """
     IMPORTANT:
     - Do not add any other text or characters
     - Return only valid JSON using this schema.
-    {
+    {{
     "applicant_snapshot": "string",
     "supportive_factors": ["string", ...],
     "risk_factors": ["string", ...],
     "policy_process_insights": [
-        {
+        {{
         "insight": "string",
         "source_document": "string"
-        },
+        }},
         ...
     ],
     "missing_information": ["string", ...],
     "recommended_review_actions": ["string", ...],
     "analyst_rationale_draft": "string",
     "confidence_limitations": "string"
-    }
+    }}
 """

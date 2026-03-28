@@ -6,6 +6,7 @@ from app.ml.ml_processor import ml_processor
 from app.ml.model_config import model_config
 
 from app.core.logging_config import get_logger
+from app.models.ml_models import ModelSignals
 
 logger = get_logger(__name__)
 
@@ -30,14 +31,16 @@ class PaybackService:
     Uses trained model to predict credit risk scoring based on provided data
     """
 
-    def payback(self, request: PaybackRequest) -> Tuple[LoanDecisionEnum, float]:
+    def payback(
+        self, request: PaybackRequest
+    ) -> Tuple[LoanDecisionEnum, float, ModelSignals]:
         features = self.__parse_payback_to_dataframe(request)
 
         logger.info(
             f"Predicting payback probability for request ID: {request.request_id}..."
         )
         try:
-            payback_proba = ml_processor.score_single(features)
+            payback_proba, model_signals = ml_processor.score_single(features)
             loan_decision = self.get_loan_decision(payback_proba)
 
         # TODO: improve error handling.
@@ -51,7 +54,7 @@ class PaybackService:
             f"Predicting payback probability for request ID: {request.request_id} done."
         )
 
-        return loan_decision, payback_proba
+        return loan_decision, payback_proba, model_signals
 
     def batch_payback():
         raise NotImplementedError("This feature is not implemented yet.")

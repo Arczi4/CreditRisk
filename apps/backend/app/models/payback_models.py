@@ -4,6 +4,8 @@ from uuid import UUID, uuid4
 
 from pydantic import BaseModel, Field, field_serializer, ConfigDict
 
+from app.models.analysis_models import LlmAnalyseResponse
+
 
 class PaybackRequest(BaseModel):
     """Payback payload request model"""
@@ -58,7 +60,7 @@ class LoanDecisionEnum(Enum):
     REJECT = "Reject"
 
 
-class PaybackResponse(BaseModel):
+class PaybackEndpointResponse(BaseModel):
     """Credit score response with payback proba and additional analysis"""
 
     loan_decision: LoanDecisionEnum = Field(
@@ -66,7 +68,9 @@ class PaybackResponse(BaseModel):
         description="Approve/Review/Reject decision for given applicant. Approved when approve thershold is met",
     )
     payback_proba: float = Field(..., ge=0.0, le=1.0, description="Payback probability")
-    insights: List[str] = Field(..., description="Additional insights provided by AI")
+    insights: LlmAnalyseResponse = Field(
+        ..., description="Additional insights provided by AI"
+    )
 
     @field_serializer("payback_proba", when_used="always")
     def serialize_payback_proba(self, value: float) -> float:

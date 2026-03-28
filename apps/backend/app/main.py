@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from app.core.settings import settings
 from app.core.logging_config import LoggingConfig, get_logger
 from app.routes import payback
@@ -11,7 +12,14 @@ def create_app() -> FastAPI:
 
     logger.info(f"Setting up the {settings.PROJECT_NAME} app...")
     app = FastAPI(title=settings.PROJECT_NAME, version=settings.VERSION)
-    # TODO: setup middleware!
+
+    app.add_middleware(
+        CORSMiddleware,
+        allow_origins=settings.CORS_ORIGINS,
+        allow_credentials=True,
+        allow_methods=["*"],
+        allow_headers=["*"],
+    )
 
     # Including routers
     app.include_router(
