@@ -1,0 +1,84 @@
+.app-shell {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Header */
+.app-header {
+  background: var(--color-primary);
+  color: white;
+  padding: var(--space-4) var(--space-8);
+  box-shadow: var(--shadow-md);
+}
+
+.header-content {
+  max-width: 960px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.logo-icon {
+  font-size: var(--font-size-2xl);
+}
+
+.logo-text {
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-bold);
+  letter-spacing: -0.01em;
+}
+
+.header-tagline {
+  font-size: var(--font-size-sm);
+  opacity: 0.75;
+}
+
+/* Main */
+.app-main {
+  flex: 1;
+  max-width: 960px;
+  width: 100%;
+  margin: 0 auto;
+  padding: var(--space-10) var(--space-6);
+}
+
+/* Error banner */
+.error-banner {
+  background: var(--color-reject-bg);
+  color: var(--color-reject);
+  border: 1px solid var(--color-reject);
+  border-radius: var(--radius-md);
+  padding: var(--space-4) var(--space-5);
+  margin-bottom: var(--space-6);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: var(--font-size-sm);
+}
+
+.error-dismiss {
+  background: none;
+  border: none;
+  color: var(--color-reject);
+  font-size: var(--font-size-xl);
+  cursor: pointer;
+  padding: 0 var(--space-2);
+  line-height: 1;
+}
+
+/* Footer */
+.app-footer {
+  text-align: center;
+  padding: var(--space-6);
+  color: var(--color-text-muted);
+  font-size: var(--font-size-xs);
+  border-top: 1px solid var(--color-border);
+}

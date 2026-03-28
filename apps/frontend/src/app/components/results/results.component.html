@@ -1,0 +1,99 @@
+<div class="results-container">
+
+  <!-- Decision Header -->
+  <section class="decision-header">
+    <div class="decision-badge" [class]="decisionClass">
+      {{ decision }}
+    </div>
+    <div class="proba-section">
+      <span class="proba-label">Payback Probability</span>
+      <div class="proba-bar-track">
+        <div
+          class="proba-bar-fill"
+          [class]="decisionClass"
+          [style.width.%]="probaPercent"
+        ></div>
+      </div>
+      <span class="proba-value">{{ result().payback_proba | number:'1.2-2' }}%</span>
+    </div>
+  </section>
+
+  <!-- Applicant Snapshot -->
+  <section class="card">
+    <h3>Applicant Snapshot</h3>
+    <p class="snapshot-text">{{ result().insights.applicant_snapshot }}</p>
+  </section>
+
+  <!-- Two-column: Supportive + Risk Factors -->
+  <div class="two-col">
+    <section class="card card-positive">
+      <h3>Supportive Factors</h3>
+      <ul>
+        @for (item of result().insights.supportive_factors; track item) {
+          <li>{{ item }}</li>
+        }
+      </ul>
+    </section>
+
+    <section class="card card-negative">
+      <h3>Risk Factors</h3>
+      <ul>
+        @for (item of result().insights.risk_factors; track item) {
+          <li>{{ item }}</li>
+        }
+      </ul>
+    </section>
+  </div>
+
+  <!-- Policy & Process Insights -->
+  <section class="card">
+    <h3>Policy &amp; Process Insights</h3>
+    <div class="policy-list">
+      @for (item of result().insights.policy_process_insights; track item.insight) {
+        <div class="policy-item">
+          <p class="policy-insight">{{ item.insight }}</p>
+          <span class="policy-source">{{ item.source_document }}</span>
+        </div>
+      }
+    </div>
+  </section>
+
+  <!-- Missing Information -->
+  <section class="card card-warning">
+    <h3>Missing Information</h3>
+    <ul>
+      @for (item of result().insights.missing_information; track item) {
+        <li>{{ item }}</li>
+      }
+    </ul>
+  </section>
+
+  <!-- Recommended Review Actions -->
+  <section class="card">
+    <h3>Recommended Review Actions</h3>
+    <ol class="actions-list">
+      @for (item of result().insights.recommended_review_actions; track item) {
+        <li>{{ item }}</li>
+      }
+    </ol>
+  </section>
+
+  <!-- Analyst Rationale Draft -->
+  <section class="card">
+    <h3>Analyst Rationale Draft</h3>
+    <p class="rationale-text">{{ result().insights.analyst_rationale_draft }}</p>
+  </section>
+
+  <!-- Confidence Limitations -->
+  <section class="card card-muted">
+    <h3>Confidence &amp; Limitations</h3>
+    <p>{{ result().insights.confidence_limitations }}</p>
+  </section>
+
+  <!-- Actions -->
+  <div class="results-actions">
+    <button class="btn-secondary" (click)="onReset()">
+      Analyze Another Application
+    </button>
+  </div>
+</div>

@@ -1,0 +1,32 @@
+<div class="app-shell">
+  <header class="app-header">
+    <div class="header-content">
+      <div class="logo">
+        <span class="logo-icon">&#9678;</span>
+        <span class="logo-text">CreditRisk</span>
+      </div>
+      <span class="header-tagline">AI-Powered Credit Analysis</span>
+    </div>
+  </header>
+
+  <main class="app-main">
+    @if (error()) {
+      <div class="error-banner">
+        <p>{{ error() }}</p>
+        <button class="error-dismiss" (click)="error.set(null)">&times;</button>
+      </div>
+    }
+
+    @if (!result()) {
+      <app-loan-form (submitRequest)="onSubmit($event)" />
+    } @else {
+      <app-results [result]="result()!" (resetRequest)="onReset()" />
+    }
+  </main>
+
+  <app-loading-modal [visible]="loading()" />
+
+  <footer class="app-footer">
+    <p>CreditRisk Analysis Platform &mdash; For authorized use only</p>
+  </footer>
+</div>

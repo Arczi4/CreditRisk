@@ -1,0 +1,170 @@
+<form class="loan-form" (ngSubmit)="onSubmit()" #loanForm="ngForm">
+  <div class="form-header">
+    <h2>Loan Application Analysis</h2>
+    <p>Enter the applicant details below to receive a credit risk assessment.</p>
+    <div class="debug-presets">
+      @for (preset of presets; track preset.label) {
+        <button
+          type="button"
+          class="btn-preset"
+          [class.disabled]="!preset.data"
+          [disabled]="!preset.data"
+          (click)="fillPreset(preset)"
+        >
+          Fill: {{ preset.label }}
+        </button>
+      }
+    </div>
+  </div>
+
+  <section class="form-section">
+    <h3>Applicant Information</h3>
+    <div class="form-grid">
+      <div class="form-group">
+        <label for="gender">Gender</label>
+        <select id="gender" [(ngModel)]="form.gender" name="gender" required>
+          <option value="" disabled>Select gender</option>
+          @for (opt of genderOptions; track opt) {
+            <option [value]="opt">{{ opt }}</option>
+          }
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="maritalStatus">Marital Status</label>
+        <select id="maritalStatus" [(ngModel)]="form.marital_status" name="marital_status" required>
+          <option value="" disabled>Select status</option>
+          @for (opt of maritalOptions; track opt) {
+            <option [value]="opt">{{ opt }}</option>
+          }
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="education">Education Level</label>
+        <select id="education" [(ngModel)]="form.education_level" name="education_level" required>
+          <option value="" disabled>Select level</option>
+          @for (opt of educationOptions; track opt) {
+            <option [value]="opt">{{ opt }}</option>
+          }
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="employment">Employment Status</label>
+        <select id="employment" [(ngModel)]="form.employment_status" name="employment_status" required>
+          <option value="" disabled>Select status</option>
+          @for (opt of employmentOptions; track opt) {
+            <option [value]="opt">{{ opt }}</option>
+          }
+        </select>
+      </div>
+    </div>
+  </section>
+
+  <section class="form-section">
+    <h3>Loan Details</h3>
+    <div class="form-grid">
+      <div class="form-group">
+        <label for="purpose">Loan Purpose</label>
+        <select id="purpose" [(ngModel)]="form.loan_purpose" name="loan_purpose" required>
+          <option value="" disabled>Select purpose</option>
+          @for (opt of purposeOptions; track opt) {
+            <option [value]="opt">{{ opt }}</option>
+          }
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="grade">Grade / Subgrade</label>
+        <select id="grade" [(ngModel)]="form.grade_subgrade" name="grade_subgrade" required>
+          <option value="" disabled>Select grade</option>
+          @for (opt of gradeOptions; track opt) {
+            <option [value]="opt">{{ opt }}</option>
+          }
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="loanAmount">Loan Amount ($)</label>
+        <input
+          type="number"
+          id="loanAmount"
+          [(ngModel)]="form.loan_amount"
+          name="loan_amount"
+          min="0"
+          step="0.01"
+          required
+          placeholder="e.g. 2528.42"
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="interestRate">Interest Rate (%)</label>
+        <input
+          type="number"
+          id="interestRate"
+          [(ngModel)]="form.interest_rate"
+          name="interest_rate"
+          min="0"
+          step="0.01"
+          required
+          placeholder="e.g. 13.67"
+        />
+      </div>
+    </div>
+  </section>
+
+  <section class="form-section">
+    <h3>Financial Profile</h3>
+    <div class="form-grid">
+      <div class="form-group">
+        <label for="income">Annual Income ($)</label>
+        <input
+          type="number"
+          id="income"
+          [(ngModel)]="form.annual_income"
+          name="annual_income"
+          min="0"
+          step="0.01"
+          required
+          placeholder="e.g. 29367.99"
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="dti">Debt-to-Income Ratio</label>
+        <input
+          type="number"
+          id="dti"
+          [(ngModel)]="form.debt_to_income_ratio"
+          name="debt_to_income_ratio"
+          min="0"
+          step="0.001"
+          required
+          placeholder="e.g. 0.084"
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="creditScore">Credit Score</label>
+        <input
+          type="number"
+          id="creditScore"
+          [(ngModel)]="form.credit_score"
+          name="credit_score"
+          min="0"
+          step="1"
+          required
+          placeholder="e.g. 736"
+        />
+      </div>
+    </div>
+  </section>
+
+  <div class="form-actions">
+    <button type="submit" class="btn-primary" [disabled]="!isFormValid()">
+      Run Credit Analysis
+    </button>
+  </div>
+</form>
