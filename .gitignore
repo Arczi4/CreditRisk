@@ -7,7 +7,7 @@ __pycache__/
 *.so
 
 # My local stuff
-*/local
+local/
 
 my_notes.md
 

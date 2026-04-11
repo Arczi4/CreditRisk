@@ -1,3 +1,4 @@
+import asyncio
 from typing import Tuple
 
 import pandas as pd
@@ -6,7 +7,7 @@ from app.ml.ml_processor import ml_processor
 from app.ml.model_config import model_config
 
 from app.core.logging_config import get_logger
-from app.models.ml_models import ModelSignals
+from app.models.ml_models import Contributors, ModelSignals
 
 logger = get_logger(__name__)
 
@@ -31,7 +32,7 @@ class PaybackService:
     Uses trained model to predict credit risk scoring based on provided data
     """
 
-    def payback(
+    async def payback(
         self, request: PaybackRequest
     ) -> Tuple[LoanDecisionEnum, float, ModelSignals]:
         features = self.__parse_payback_to_dataframe(request)
@@ -40,7 +41,9 @@ class PaybackService:
             f"Predicting payback probability for request ID: {request.request_id}..."
         )
         try:
-            payback_proba, model_signals = ml_processor.score_single(features)
+            payback_proba, model_signals = await asyncio.to_thread(
+                ml_processor.score_single, features
+            )
             loan_decision = self.get_loan_decision(payback_proba)
 
         # TODO: improve error handling.
@@ -48,7 +51,12 @@ class PaybackService:
             logger.error(
                 f"Error during predicting payback probability for request ID: {request.request_id}. ERROR: {e}"
             )
-            return LoanDecisionEnum.REJECT, 0.0
+            empty = Contributors(featureNames=[], contribution=[])
+            return (
+                LoanDecisionEnum.REJECT,
+                0.0,
+                ModelSignals(topPositive=empty, topNegative=empty),
+            )
 
         logger.info(
             f"Predicting payback probability for request ID: {request.request_id} done."

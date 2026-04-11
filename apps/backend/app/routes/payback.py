@@ -20,7 +20,9 @@ async def payback(
     # TODO: Better error handling
     try:
         # TODO: create dataclass
-        loan_decision, predict_proba, model_signals = payback_service.payback(request)
+        loan_decision, predict_proba, model_signals = await payback_service.payback(
+            request
+        )
     except Exception as e:
         raise Exception(
             f"Errod during predicting payback probability for request: {request.request_id}. ERROR: {e}"
@@ -30,7 +32,9 @@ async def payback(
     )
 
     try:
-        parsed_analysis_response = analysis_service.analyse(request, model_signals)
+        parsed_analysis_response = await analysis_service.analyse(
+            request, model_signals
+        )
     except:
         raise Exception(
             f"Error during running analysis for request {request.request_id}"

@@ -22,16 +22,16 @@ class AnalysisService:
         self.chain = self.prompt | self.model | StrOutputParser()
         self.retriever = retriever_service.get_retriever()
 
-    def analyse(
+    async def analyse(
         self, applicant_data: PaybackRequest, model_signals: ModelSignals
     ) -> LlmAnalyseResponse:
         # TODO: Add error handling
         logger.info(f"Analysing application for {applicant_data.request_id}...")
 
-        retrieved_context = self.retriever.invoke(
+        retrieved_context = await self.retriever.ainvoke(
             self.build_retrieval_query(applicant_data, model_signals)
         )
-        analyse_result = self.chain.invoke(
+        analyse_result = await self.chain.ainvoke(
             {
                 "applicant_info": applicant_data.model_dump(),
                 "model_signals_json": model_signals.model_dump(),
