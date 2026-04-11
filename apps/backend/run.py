@@ -1,6 +1,5 @@
 import uvicorn
 from app.core.settings import settings
-from app.ml.model_pipelines import Log1pImputer, RatioInteractionImputer  # noqa: F401
 
 if __name__ == "__main__":
     uvicorn.run(

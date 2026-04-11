@@ -4,9 +4,23 @@ import numpy as np
 import pickle
 from typing import Tuple
 
+from app.ml import model_pipelines
 from app.ml.model_config import model_config
-from app.ml.model_pipelines import Log1pImputer, RatioInteractionImputer  # noqa: F401
 from app.models.ml_models import Contributors, ModelSignals
+
+# Pickles saved from a notebook/script register custom steps as __main__.ClassName;
+# at runtime __main__ is uvicorn, so unpickling fails unless we remap to real modules.
+_MAIN_CLASS_ALIASES = {
+    "Log1pImputer": model_pipelines.Log1pImputer,
+    "RatioInteractionImputer": model_pipelines.RatioInteractionImputer,
+}
+
+
+class _PipelineUnpickler(pickle.Unpickler):
+    def find_class(self, module, name):
+        if module == "__main__" and name in _MAIN_CLASS_ALIASES:
+            return _MAIN_CLASS_ALIASES[name]
+        return super().find_class(module, name)
 
 
 class MlProcessor:
@@ -19,7 +33,9 @@ class MlProcessor:
 
     def __load_model(self):
         try:
-            model = pickle.load(open(self.models_path / self.model_name, "rb"))
+            path = self.models_path / self.model_name
+            with open(path, "rb") as f:
+                model = _PipelineUnpickler(f).load()
         except Exception as e:
             raise Exception(
                 f"Cannot load the model! model_name: {self.model_name}, model_path: {self.models_path}. ERROR: {e}"
